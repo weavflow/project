@@ -1,0 +1,27 @@
+.hd__container {
+    background-color: #000;
+    padding: 12px 24px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    margin: 20px;
+}
+
+.hd__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 좌측 연도 */
+.hd__year {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 우측 이름 */
+.hd__author {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}

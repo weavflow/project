@@ -10,7 +10,8 @@ type Props = {
 }
 
 export default function Calendar({value, onChange}: Props) {
-    const today = new Date();
+    const today = value ? new Date(value): new Date();
+    // 현재 날짜 혹은 선택 날짜
     const nowYear = today.getFullYear();
     const nowMonth = today.getMonth() + 1;
 

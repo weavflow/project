@@ -1,0 +1,36 @@
+/*중앙 네비*/
+.navbar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nb__list {
+    display: flex;
+    list-style: none;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+
+/*탭 스타일*/
+.nb__item {
+    padding: 4px 10px;
+    border-radius: 16px;
+    border: 1px solid #dcdcdc;
+    background-color: #f2f2f2;
+    color: #777;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nb__item:hover {
+    background-color: #e6e6e6;
+}
+
+.nb__item.active {
+    background-color: #2d5bff;
+    color: white;
+    border: none;
+}

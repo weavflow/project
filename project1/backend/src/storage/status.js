@@ -1,8 +1,6 @@
-const status = [
+export const status = [
     "STANDBY",
     "CONFIRMED",
     "COMPLETED",
-    "CANCELLED",
+    "CANCELLED"
 ];
-
- export default status;

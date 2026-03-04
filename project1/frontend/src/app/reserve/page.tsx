@@ -1,5 +1,7 @@
 "use client"
-import {useState} from "react";
+
+import {redirect, useRouter} from "next/navigation"
+import {useState, useEffect} from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import Calendar from "@/components/Calendar/Calendar";
@@ -8,38 +10,68 @@ import Time from "@/components/Time/Time";
 
 
 export default function page() {
+    const router = useRouter();
+
     const [location, setLocation] = useState<string | null>(null);
     const [date, setDate] = useState<string | null>(null);
     const [time, setTime] = useState<string | null>(null);
+    const [name, setName] = useState("");
+    const [reservedSlots, setReservedSlots] = useState<string[]>([]);
+    const [step, setStep] = useState(1);
 
-    const handleSubmit = (e: React.SubmitEvent) => {
+    const handleNext = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // string으로 전달.
         console.log("선택된 값");
         console.log("location: ", location);
         console.log("date: ", date);
         console.log("time: ", time);
+
+        if (!date || !location || !time) return;
+
+        setStep(2);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        await fetch("/reservations", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({location, date, time, name})
+        });
+
+        redirect("/")
     }
 
+    useEffect(() => {
+        if (!date || !location) return;
+
+        const fetchSlots = async () => {
+            const res = await fetch(`/reservations/slots?location=${location}&date=${date}`);
+            if (!res.ok) return;
+
+            const data = await res.json();
+            setReservedSlots(data);
+        };
+
+        fetchSlots();
+    },[date, location]);
 
     return (
         <>
-            <form className={styles.form} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={step === 1 ? handleNext : handleSubmit}>
                 <Location value={location} onChange={setLocation} />
-                <div style={{display: "flex", flexDirection: "column"}}>
-                    <Calendar value={date} onChange={setDate} />
-                    <Time value={time} onChange={setTime} />
-                </div>
-                <button type={"reset"} className={styles.button}>새로 고침</button>
+                <Calendar value={date} onChange={setDate} />
+                <Time value={time} onChange={setTime} reservedSlots={reservedSlots}/>
 
+                <button type={"reset"} className={styles.button}>새로 고침</button>
                 <button type={"submit"} className={styles.button}>다음 단계</button>
             </form>
 
-            <Link href={"/"}>
-                <button type={"button"} className={styles.button}>돌아가기</button>
+            <Link href={"/"} className={styles.button}>
+                돌아가기
             </Link>
-
         </>
     )
 }

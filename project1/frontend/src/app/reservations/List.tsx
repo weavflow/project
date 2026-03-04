@@ -1,9 +1,9 @@
-import {ReservationsResponse} from "@/types/Data";
-import styles from "./List.module.css";
+import {ReservationListResponse} from "@/types/Data";
+import styles from "./page.module.css";
 import {KSTConversion} from "@/utils/KSTConversion";
 import Link from "next/link";
 
-export default function List({data}: ReservationsResponse) {
+export default function List({data}: ReservationListResponse) {
     return (
         <section style={{textAlign: "center"}}>
             <h3> 예약 목록 </h3>
@@ -28,7 +28,7 @@ export default function List({data}: ReservationsResponse) {
                         <td className={styles.td}>{KSTConversion(v.startAt)}</td>
                         <td className={styles.td}>{v.status}</td>
                         <td className={styles.td}>
-                            <Link href={`/reservations/${v.id}`} className={styles.btn}>
+                            <Link href={`/reservations/${v.id}/update`} className={styles.btn}>
                                 상세보기
                             </Link>
                         </td>

@@ -5,9 +5,8 @@ import {
     removeReservation,
     updateReservationStatus,
     getReservationById,
-    getReservationByFilter,
+    getReservationByFilter, findReservedSlots,
 } from "../services/reservation.service.js";
-import fs from "fs";
 // 오로지 req, res만 받고 service를 호출하여 결과를 전달하는 로직
 // sql과 db X
 
@@ -17,7 +16,10 @@ export async function getListOrFilter(req, res) {
     const filter = ({
         reserveId: req.query.reserveId || null,
         name: req.query.name || null,
-        status: req.query.status || null
+        status: req.query.status || null,
+        location: req.query.location || null,
+        date: req.query.date || null,
+        time: req.query.time || null,
     })
 
     let data;
@@ -110,4 +112,18 @@ export async function remove (req, res) {
             message: err.message
         })
     }
+}
+
+export async function getReservedSlots (req, res)  {
+    const {location, date} = req.query;
+
+    const startUTC = new Date(`${date}T00:00:00+09:00`);
+    const endUTC = new Date(`${date}T00:00:00+09:00`);
+    endUTC.setDate(endUTC.getDate() + 1);
+
+    const startDate = startUTC.toISOString();
+    const endDate = endUTC.toISOString();
+
+    const slots = await findReservedSlots(location, startDate, endDate);
+    return res.status(200).json(slots);
 }

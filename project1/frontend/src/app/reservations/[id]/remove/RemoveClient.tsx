@@ -2,29 +2,30 @@
 import {useRouter} from "next/navigation";
 import {Reservation} from "@/types/Data"
 import styles from "./RemoveClient.module.css"
-import DeleteReservation from "@/components/DeleteReservation/DeleteReservation"
+import {removeReservation} from "../../actions"
 import {KSTConversion} from "@/utils/KSTConversion";
 
 type Props = {
-    result: Reservation;
+    data: Reservation;
 }
 
-export default function RemoveClient({result} : Props) {
+export default function RemoveClient({data} : Props) {
     const router = useRouter();
 
     return (
         <div className={styles.backdrop}>
-            <form action={DeleteReservation} className={styles.content}>
-                    <ul className={styles.list}>
-                        <li>예약 번호 : {result.reserveId}</li>
-                        <li>예약자 성함 : {result.name}</li>
-                        <li>예약 시작일 : {KSTConversion(result.startAt)}</li>
+            <form action={removeReservation} className={styles.content}>
+                    <ul className={styles.list} key={data.id}>
+                        <li>예약 번호 : {data.reserveId}</li>
+                        <li>예약자 성함 : {data.name}</li>
+                        <li>예약 장소 : {data.location}</li>
+                        <li>예약 시작일 : {KSTConversion(data.startAt)}</li>
                     </ul>
 
                 <input
                     type={"hidden"}
                     name={"id"}
-                    value={result.id} />
+                    value={data.id} />
 
                 <button
                     type={"button"}
@@ -34,7 +35,8 @@ export default function RemoveClient({result} : Props) {
                     취소
                 </button>
 
-                <button type="submit">
+                <button
+                    type={"submit"}>
                     삭제
                 </button>
             </form>

@@ -4,6 +4,7 @@ export interface Reservation {
     startAt: string;
     endAt: string;
     reserveId: string;
+    location: string;
     status: string;
     createdAt: string;
     updatedAt: string;

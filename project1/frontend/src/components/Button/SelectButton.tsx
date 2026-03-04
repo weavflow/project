@@ -1,16 +1,16 @@
 import {OptionProps} from "@/types/Option";
 import styles from "./Button.module.css";
 
-export function SelectButton({option, selected, onSelect}: OptionProps) {
+export function SelectButton({option, selected, disabled = false, onSelect}: OptionProps) {
     return (
         <>
             <button
                 type={"button"}
-                className={`${styles.button} ${selected? styles.selected: ""}`}
-                onClick={onSelect}
+                disabled={disabled}
+                className={`${styles.button} ${selected? styles.selected: ""} ${disabled? styles.disabled: ""}`}
+                onClick={() => {if (!disabled) onSelect();}}
             >
                 {option}
             </button>
         </>
-)
-}
+)}

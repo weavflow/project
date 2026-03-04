@@ -1,5 +1,5 @@
 import {ReservationListResponse} from "@/types/Data";
-import List from "@/hooks/List/List"
+import List from "./List"
 
 type Params = {
     searchParams: Promise<{

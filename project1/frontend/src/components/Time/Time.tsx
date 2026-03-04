@@ -3,25 +3,33 @@ import {SelectButton} from "@/components/Button/SelectButton";
 type Props = {
     value: string | null;
     onChange: (v: string | null) => void;
+    reservedSlots: string[];
 }
 
 type Option = string;
 
-export default function Time({value, onChange}: Props) {
+export default function Time({value, onChange, reservedSlots}: Props) {
     const start = "09:00";
     const end = "18:00";
     const slot: Option[] = buildTimeSlots(start, end, 30);
 
     return (
         <div>
-            {slot.map((opt) => (
-                <SelectButton
-                    key={opt}
-                    option={opt}
-                    selected={value === opt}
-                    onSelect={() => onChange(opt)}
-                />
-            ))}
+            {slot.map((opt) => {
+                const isReserved = reservedSlots.includes(opt);
+
+                return (
+                    <SelectButton
+                        key={opt}
+                        option={opt}
+                        selected={value === opt}
+                        disabled={isReserved}
+                        onSelect={() => {
+                            if (!isReserved) onChange(opt)
+                        }}
+                    />
+                )
+            })}
         </div>
     )
 }

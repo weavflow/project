@@ -6,7 +6,7 @@ import {
     findAll,
     findById,
     updateStatus,
-    findByFilter,
+    findByFilter, getReserveByLocationDate,
 } from "../storage/reservation.storage.js";
 import { reserveId } from "../utils/idGenerator.js";
 import {MySQLDateTime} from "../utils/MySQLDateTime.js";
@@ -28,6 +28,25 @@ export async function getReservationByFilter(filter) {
 export async function getReservationById({id}) {
     const data = await findById(id);
     return data ?? null;
+}
+
+export async function findReservedSlots(location, startDate, endDate) {
+    const data = await getReserveByLocationDate(location, startDate, endDate);
+
+    if (!data || data.length === 0) return [];
+
+    return data.map(row => {
+        const dateUTC = new Date(row.startAt)
+
+        const formatter = new Intl.DateTimeFormat("ko-KR", {
+            timeZone: "Asia/Seoul",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+        })
+
+        return formatter.format(dateUTC);
+    })
 }
 
 // 추가

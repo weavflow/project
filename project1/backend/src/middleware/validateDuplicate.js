@@ -24,6 +24,34 @@ import {UTCConversion} from "../utils/UTCConversion.js";
 //     }
 // }
 
+export async function buildUTC(req, res, next) {
+    const {date, time} = req.body;
+
+    if (!date || !time) {
+        return res.status(400).json({
+            error: {
+                code: "NOT_FOUND",
+                message: "날짜 또는 시간이 지정되지 않았습니다.",
+            }
+        })
+    }
+
+    const kst = UTCConversion(date, time);
+
+    if (isNaN(kst.getTime())) {
+        return res.status(400).json({
+            error: {
+                code: "INVALID_DATE",
+                message: "잘못된 날짜 형식입니다.",
+            }
+        })
+    }
+
+    req.body.startAt = kst.toISOString();
+
+    next();
+}
+
 // endAt 시간 보정
 export async function buildEndAt(req, res, next) {
     const { startAt } = req.body;
@@ -47,13 +75,14 @@ export async function buildEndAt(req, res, next) {
 
 // 날짜 중복 검증
 export async function validateDuplicate (req, res, next) {
-    const startAt = req.body.startAt;
-    const endAt = req.body.endAt;
+    const {location, startAt, endAt} = req.body;
+    const id = req.params.id;
 
     console.log("CHECK startAt:", startAt, "endAt:", endAt);
 
     try{
-        const exists = await getReserveByAt(startAt, endAt);
+        const exists = await getReserveByAt({location, startAt, endAt, id});
+
         if (exists) {
             return res.status(400).json({
                 error: {
