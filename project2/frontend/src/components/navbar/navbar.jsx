@@ -1,8 +1,7 @@
 import "./navbar.css"
 import {useState} from "react";
 
-export default function Navbar() {
-    const [active, setActive] = useState("profile");
+export default function Navbar({tab, setTab}) {
 
     return (
         <nav className={"navbar"} aria-label="menu">
@@ -10,8 +9,8 @@ export default function Navbar() {
                 {["profile", "about", "project"].map((item) => (
                     <li
                         key={item}
-                        className={`nb__item ${active === item? "active" : ""}`}
-                        onClick={() => setActive(item)}
+                        className={`nb__item ${tab === item? "active" : ""}`}
+                        onClick={() => setTab(item)}
                     >
                         {item}
                     </li>

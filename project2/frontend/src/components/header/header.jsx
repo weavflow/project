@@ -2,7 +2,7 @@ import Navbar from "../navbar/navbar.jsx";
 import "./header.css";
 
 
-export default function Header() {
+export default function Header({tab, setTab}) {
     return (
         <header className={"hd__container"}>
             <div className={"hd__inner"}>
@@ -11,7 +11,7 @@ export default function Header() {
                     <span className={"hd__year"}>2026</span>
                 </div>
 
-                <Navbar />
+                <Navbar tab={tab} setTab={setTab} />
 
                 <div className={"hd__name"}>
                     <span className={"hd__author"}>WeavFlow</span>
