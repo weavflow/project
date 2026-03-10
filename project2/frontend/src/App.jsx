@@ -2,9 +2,9 @@ import "./App.css"
 import {useState} from "react";
 import Header from "./components/header/header.jsx";
 
-import Profile from "./components/sections/profile.jsx";
-import About from "./components/sections/about.jsx";
-import Project from "./components/sections/project.jsx";
+import Profile from "./components/sections/profile/profile.jsx";
+import About from "./components/sections/about/about.jsx";
+import Project from "./components/sections/project/project.jsx";
 
 function App() {
     const [tab, setTab] = useState("profile");

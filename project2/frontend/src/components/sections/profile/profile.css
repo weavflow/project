@@ -1,0 +1,33 @@
+.profile {
+    display: flex;
+    flex-direction: row;
+}
+
+ul {
+    list-style-type: none;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+.pr__header {
+    max-width: 1200px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 80px;
+
+    margin: 0 auto;
+    align-self: center;
+}
+
+.pr__body__first {
+    border-top: 2px solid #777;
+    padding: 0 20px 0 12px;
+}
+
+.pr__body__second {
+    border-top: 2px solid #777;
+    padding-left: 12px;
+}
