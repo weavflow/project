@@ -41,7 +41,7 @@ export default function page() {
             body: JSON.stringify({location, date, time, name})
         });
 
-        redirect("/")
+        redirect("/");
     }
 
     useEffect(() => {

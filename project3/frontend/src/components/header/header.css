@@ -1,0 +1,46 @@
+.header {
+    transition: margin-right 0.3s ease;
+    margin: 12px;
+    padding: 10px 20px;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+
+    height: 30px;
+}
+.hd__nav {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+
+    padding-left: 20px;
+}
+
+.hd__nav.hidden {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.hd__sidebar__btn {
+    position: absolute;
+    right: 20px;
+    z-index: 200;
+    transition: transform 0.3s ease;
+
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.active .hd__sidebar__btn {
+    transform: translateX(-280px);
+}
+
+
+
