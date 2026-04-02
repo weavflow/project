@@ -1,0 +1,35 @@
+.footer {
+    background-color: #1f2937;
+    color: white;
+
+    margin-top: 20px;
+    font-size: 12px;
+
+    overflow: hidden;
+}
+
+.footer a, ul {
+    color: white;
+    list-style: none;
+}
+
+.ft__section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 0;
+}
+
+.ft__list__left {
+    padding-left: 32px;
+    text-align: left;
+}
+
+.ft__list__right {
+    padding-right: 32px;
+    text-align: right;
+}
+
+.ft__section li {
+    padding-bottom: 4px;
+}

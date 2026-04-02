@@ -1,0 +1,29 @@
+.td__initial {
+    display: flex;
+    flex-direction: column;
+
+    justify-items: center;
+    align-items: center;
+}
+
+.td__error {
+    display: flex;
+    flex-direction: column;
+
+    justify-items: center;
+    align-items: center;
+}
+
+.td__error button {
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #1f2937;
+    color: #fff;
+    cursor: pointer;
+}
+
+.td__error button:hover {
+    background-color: #474876;
+    transition: background-color 0.5s ease;
+}

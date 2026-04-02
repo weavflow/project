@@ -1,0 +1,19 @@
+.td__empt {
+    justify-self: center;
+    text-align: center;
+}
+
+.td__empt__btn {
+    padding: 12px;
+    border: none;
+    background-color: #1f2937;
+    color: white;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.td__empt__btn:hover {
+    background-color: #474876;
+    transition: background-color 0.5s ease-in;
+}

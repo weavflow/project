@@ -1,0 +1,81 @@
+.td__form {
+    display: flex;
+    flex-direction: column;
+
+    justify-self: center;
+}
+
+.td__form h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.td__form__head {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    margin: 24px;
+    gap: 12px;
+
+    position: relative;
+}
+
+.td__input {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+
+    padding: 30px 10px 8px;
+    font-size: 16px;
+}
+
+.td__form__head label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.2s;
+    pointer-events: none;
+    color: #999;
+}
+
+.td__error {
+    justify-content: center;
+    text-align: center;
+    margin: 16px auto;
+    font-size: 14px;
+    color: red;
+}
+
+.td__form__btn {
+    display: flex;
+    justify-content: center;
+
+    gap: 50px;
+    margin-bottom: 16px;
+}
+
+.td__form__btn button {
+    border: none;
+    background: #1f2937;
+    color: white;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.td__input:focus + label,
+.td__input:not(:placeholder-shown) + label{
+    top: 10px;
+    font-size: 14px;
+}
+
+.td__input:focus {
+    outline: 1px #1f2937 solid;
+}
+
+.td__form__btn button:hover {
+    background: #474876;
+    transition: background 0.5s ease;
+}

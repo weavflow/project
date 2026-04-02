@@ -29,7 +29,7 @@ export async function getReservationById({id}) {
     const data = await findById(id);
     return data ?? null;
 }
-
+// location 검색
 export async function findReservedSlots(location, startDate, endDate) {
     const data = await getReserveByLocationDate(location, startDate, endDate);
 

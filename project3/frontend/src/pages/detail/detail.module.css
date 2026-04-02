@@ -1,0 +1,44 @@
+.td__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.td__content {
+    list-style-type: none;
+    text-align: left;
+    color: black;
+    padding: 12px;
+}
+
+.td__content li {
+    padding: 4px;
+}
+
+.td__content__title {
+    font-weight: bold;
+}
+
+.td__content__btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+}
+
+.td__btn {
+    text-decoration: none;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.td__btn:hover {
+    background-color: #474876;
+    transition: background-color 0.5s ease;
+}
