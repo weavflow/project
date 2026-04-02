@@ -1,16 +1,35 @@
-# React + Vite
+React Router 기반으로 CRUD 구현
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+세부 내용으로 상태 관리, 접근 제어, 낙관적 업데이트, UX 개선 사항까지 포함한 일정 관리 어플리케이션
 
-Currently, two official plugins are available:
+라우팅은 Layout 패턴을 사용하여 Header, Footer의 공통 UI분리 진행.
+각 페이지는 목록, 상세, 수정, 상태 변경 등으로 역할 분리를 진행.
+전체 목록와 상태 변경 페이지에서 검색어 입력을 통한 URL 상태 동기화와 실시간 필터 검색 구현.
+수정 페이지에서는 각각 서버 데이터와 사용자 수정 데이터를 분리해서 관리.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+데이터의 신뢰성와 일관성을 보장하기 위해 모든 시간은 DB에서 자동 처리.
 
-## React Compiler
+React Query의 동작 원리를 이해하기 위해서 직접 구조를 구현.
+    useServiceMutation
+        - 요청 실행
+            호출부에서만 수정 or 삭제 인지, 해당 훅에선 재사용 가능한 패턴으로 분리.
+        - 낙관적 업데이트
+            바로 실행이 되기 보단 UI에서 먼저 실행이 된 이후에 서버 처리가 되는 구조로 설계.
+        - rollback
+            실행에서 오류 발생 혹은 서버 오류로 인한 실패 시 UI만 되돌리면 되는 구조로 설계.
+        - success / error 분리
+            현 프로젝트의 구조를 기준으로 수정과 삭제는 다른 방향성을 가진 구조로 설계함을 판단하여
+            각각 성공과 실패를 분리했고, 수정과 삭제도 다른 성공으로 분리를 진행.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Input & Edit
+추가와 수정페이지는 현재 구조에서 공통 UI가 존재하지만 통합하면 조건 분기가 많아 오히려 복잡도만 증가함에 따라 각 페이지를 분리.
 
-## Expanding the ESLint configuration
+useServiceAccess
+수정과 상세정보 페이지에 직접 URL 접근과 같은 비정상적 접근 흐름을 UX 단계에서 제어하기 위해 구현.
+    - sessionStorage사용
+    - TTL 기반 접근 제한
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+데이터의 일관성과 무결성을 보장하기 위해 등록, 수정, 삭제의 시간은 서버에서 관리하도록 분리.
+
+해당 프로젝트는 단순한 일정 관리 어플리케이션이지만 추가 확장에 대응해 재사용 가능한 패턴과 구조 확장이 가능한 패턴을 사용하여
+데이터 구조가 변경되어도 프론트의 수정 범위를 최소화하였음.
