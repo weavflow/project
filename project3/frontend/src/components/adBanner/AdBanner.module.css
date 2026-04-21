@@ -1,0 +1,71 @@
+.ad__wrapper {
+    position: relative;
+    overflow: hidden;
+    width: var(--header-ad-width);
+    height: var(--header-ad-height);
+    z-index: 1;
+}
+
+.ad__track {
+    position: relative;
+    width: var(--header-ad-width);
+    height: var(--header-ad-height);
+    /*will-change: transform;*/
+/*
+    GPU 레이어로 올려서 transform 인터폴레이션 안정화
+    단, 이미 스타일이 적용되어 있는 부분에 :hover의 요소에
+    위의 속성을 사용한 경우 브라우저가 최적화를 실행하는 시간이 무시되어
+    해당 속성이 적용되지 않는다.
+
+    또한 잠깐동안 사용하는 것은 문제가 되지 않으나
+    지속적으로 사용 시 브라우저의 리소스를 많이 사용하며
+    지금의 구조인 이미지 슬라이더에서 사용할 경우
+    오히려 장기적인 측면에서 메모리 사용량이 증가하기 때문에
+    반드시 사용 후 다시 변경을 해주어야 한다.
+*/
+}
+
+/* 페이지 main-header 광고*/
+.ad__image {
+    background-color: #aaa;
+    position: absolute;
+    inset: 0;
+    width: var(--header-ad-width);
+    height: var(--header-ad-height);
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center;
+
+    filter: brightness(0.9);
+}
+
+.ad__item {
+    width: var(--header-ad-width);
+    height: var(--header-ad-height);
+    object-fit: cover;
+}
+
+.ad__prev,
+.ad__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    border: none;
+
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.ad__prev {
+    left: 5rem;
+}
+
+.ad__next {
+    right: 5rem;
+}
+

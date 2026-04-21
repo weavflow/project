@@ -1,0 +1,97 @@
+:root {
+    --header-topEnd-color: #999;
+}
+
+/* 최상단 nav */
+.shop__header__topEnd {
+    width: var(--content-width-primary);
+    position: relative;
+    border-bottom: var(--border-primary)
+
+}
+
+/* overlay 방식에 의한 가짜 레이어 */
+.shop__header__topEnd::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(5px);
+    z-index: 0;
+}
+
+.shop__header__topEnd > * {
+    position: relative;
+    z-index: 1;
+}
+
+.shop__header__topEnd__container {
+    width: var(--content-width-secondary);
+    justify-self: center;
+}
+
+.topEnd__nav {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
+    align-items: center;
+}
+
+.topEnd__nav__right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-self: start;
+    gap: var(--spacing-gap);
+    color: var(--header-topEnd-color);
+}
+
+.topEnd__nav__left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-self: end;
+    gap: var(--spacing-gap);
+}
+
+.topEnd__login__btn {
+    border: var(--border-primary);
+    border-radius: 2px;
+    padding: 0 2px;
+    background-color: var(--header-nav-bg);
+    cursor: pointer;
+    color: var(--header-topEnd-color);
+}
+
+.topEnd__nav__icon {
+    cursor: pointer;
+    position: relative;
+    color: var(--header-topEnd-color);
+}
+
+.icon__list {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: max-content;
+    white-space: nowrap;
+
+    position: absolute;
+    border: var(--border-primary);
+    top: 35px;
+    border-radius: 0.3rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    z-index: 999;
+    transform: translateZ(0);
+}
+
+@media (max-width: 800px) {
+    .shop__header__topEnd {
+        width: var(--content-width-primary);
+        padding: var(--mobile-spacing-unit-pd);
+    }
+}

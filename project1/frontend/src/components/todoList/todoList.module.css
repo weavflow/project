@@ -1,0 +1,124 @@
+.td__container {
+    justify-self: center;
+}
+
+.td__search {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    margin: 12px;
+    position: relative;
+}
+
+.td__search input {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+
+    max-width: 100%;
+    padding: 30px 20px 8px;
+    font-size: 16px;
+}
+
+.td__search label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.3s;
+    pointer-events: none;
+    color: #999;
+}
+
+.td__table {
+    padding: 8px;
+    border-spacing: 0 8px;
+
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead th {
+    padding: 10px 15px;
+    border-bottom: 1px #333 solid;
+}
+
+tbody td {
+    text-align: center;
+    font-size: 14px;
+    padding: 24px 12px;
+    line-height: 1.6;
+}
+
+tbody tr:hover {
+    background: #1f2937;
+    transition: background 0.5s ease;
+}
+
+tbody tr:hover td,
+tbody tr:hover a {
+    color: white;
+}
+
+.td__search input:focus + label,
+.td__search input:not(:placeholder-shown) + label {
+    top: 10px;
+    font-size: 14px;
+}
+/* :focus와 :not을 같이 쓰는 이유
+    :focus 단독이라면 input 클릭 시 label이 이동한다.
+    값을 입력해도 포커스가 해제되거나 아웃되면 label이 원래 자리로 다시 이동하게 된다.
+
+    따라서 :not(placeholder-shown)을 쓰게 되면
+    placeholder이 안보이면 '값이 있다' 가 성립되고
+    label이 포커스가 해제되어도 원래 자리로 이동하지 않는다.
+*/
+.td__search input:focus {
+    outline: 1px #1f2937 solid;
+}
+
+th, td {
+    white-space: normal;
+    word-break: auto-phrase;
+}
+
+.td__table__btn {
+    border: none;
+    background-color: #1f2837;
+    color: white;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.td__table__btn:hover {
+    background-color: #474876;
+    transition: background-color 0.5s ease;
+}
+
+.td__search_check {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    gap: 12px;
+}
+
+@media (max-width: 800px) {
+    table, thead, tbody, tr, th, td {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 12px;
+        padding: 24px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+    }
+}

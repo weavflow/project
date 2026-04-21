@@ -1,0 +1,26 @@
+.header {
+    transition: margin-right 0.3s ease;
+    margin: 12px;
+    padding: 10px 20px;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+
+    height: 30px;
+}
+
+.overlay {
+    position: fixed;
+    z-index: 150;
+    inset: 0;
+    opacity: 0;
+    background: black;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 0.35;
+    pointer-events: auto;
+}

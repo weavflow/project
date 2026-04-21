@@ -1,33 +1,24 @@
-import express from "express";
-import c from "../controllers/controller.js"
-import validateDateBody from "../middleware/validateDate.js"
-import validateCreateBody from "../middleware/validateData.js";
-import {findReservation} from "../middleware/findData.js";
-import validateDuplicate from "../middleware/validateDate.js";
+import express from 'express';
+import {add, getById, getListOrFilter, update, remove, updateStatus} from "../controllers/controller.js";
 
 const router = express.Router();
 
-// 전체 조회
-router.get("/", c.getReserve);
+//전체 조회 & 필터 조회
+router.get("/", getListOrFilter);
 
-// 예약번호, 이름을 통한 단건 조회
-router.get("/:id", findReservation, c.getReserveById);
-
-// 중복검사 먼저
-router.post("/phase1", validateDuplicate, (req, res) => {
-    res.json({ok: true});
-})
+// 상세 조회
+router.get("/:id", getById);
 
 // 추가
-router.post("/", validateDateBody, validateCreateBody, c.addReserve);
+router.post("/", add);
 
 // 수정
-router.put("/:id", findReservation, validateDateBody, validateDataBody, c.updateReserve);
+router.put("/:id", update);
+
+// 상태 수정
+router.patch("/:id/status", updateStatus);
 
 // 삭제
-router.delete("/:id", findReservation, c.removeReserve);
+router.delete("/:id", remove);
 
 export default router;
-
-
-

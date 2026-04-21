@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "ad",
+        "theme": {
+            "text": "#fff",
+            "color": "#fff"
+        },
+        "image": "/ad/ad_1.jpg"
+    },
+    {
+        "id": 2,
+        "name": "ad",
+        "theme": {
+            "text": "#000",
+            "color": "navy"
+        },
+        "image": "/ad/ad_2.jpg"
+    }
+]

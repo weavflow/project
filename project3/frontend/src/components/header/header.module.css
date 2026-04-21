@@ -1,0 +1,109 @@
+:root {
+    --border-button: var(--border-primary);
+
+    --logo-primary: var(--logo-color);
+    --logo-secondary: #fff;
+
+    --logo-font-size: 2.5rem;
+
+    --header-opacity: 40%;
+
+    --mobile-font-size-default: 0.8rem;
+    --mobile-font-size-small: 0.6rem;
+    --mobile-font-size-logo: 2rem;
+    --mobile-spacing-unit-pd: 0 0.4rem;
+
+    --spacing-top-mg: 3rem 0 1.5rem 0;
+    --spacing-lounge-pd: 1rem 0;
+
+    --header-ad-width: 100%;
+    --header-ad-height: 100%;
+}
+
+.shop__header {
+    width: var(--content-width-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.shop__header__ad {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.shop__header[data-ad="true"] {
+    aspect-ratio: 1.5 / 1;
+}
+
+/* 페이지 내 nav 중앙 고정 */
+.shop__header__nav {
+    width: var(--content-width-secondary);
+    justify-self: center;
+}
+
+/*
+    페이지 내 광고를 넣을 때 표준적인 방법은
+    프론트에서 광고 영역을 고정하고 이미지는 그 안에 맞추기
+
+    특징
+    1. CLS 방지
+    만약 이미지에 맞춰 영역을 설정했을 경우
+    광고 이미지의 로딩이 늦어지거나 불러오기 실패했을 때는 페이지가 밀리는 현상이 발생.
+    그에 따라 UX가 나빠지는 상황이 발생하게됨.
+
+    2. 외부 제어 요소
+    3. 반응형 대응
+*/
+
+/*
+    지금 프로젝트의 구조에서 광고이미지가 백그라운드 이미지로 깔리고
+    그 위에 다른 요소들이 올라와 있는 구조로 진행하려면
+    1. CSS background로 변경하기
+    <img> 태그 삭제
+    css에서 background-image: url('') 명시
+
+    2. <img>태그를 유지하면서 position 방식
+    부모 요소에 position: relative; 명시
+    <img>태그에 position: absolute; 명시
+
+    2번 방안으로 진행하게 되면
+    정상적으로 img태그가 백그라운드 이미지로 진행되는 구조이지만
+    <img> 태그가 기본적으로 inline 요소이기 때문에 위/아래에 공백처럼 보이는 현상이 발생함.
+    따라서 display: block;를 명시해주어야 하며
+    global.css의 브라우저 기본 margin에 0이 명시되어 있는지 확인해야 함.
+
+    또한 <img> 태그에 position: absolute;를 명시하게 되면 문서 흐름에서 제외되면서
+    실제 첫번째 요소로 현 구조상 <TopEnd /> 로 이어지게 됨.
+
+    문제는 <TopEnd /> 에서 margin-top 혹은 margin에서 위/아래 수치를 가지고 있다면
+    그 margin이 <header> 태그 바깥으로 나오게 됨. (margin collapse)
+
+    따라서 위쪽 여백이 남는 것처럼 표시되는 현상이 발생함.
+
+    해결방안으로는 부모 요소에
+    1. padding-top: 1px; 명시
+
+    2. overflow: hidden; 명시
+
+    3. display: flow-root; 명시
+
+    4. border: 1px solid transparent; 명시
+*/
+
+.shop__header > *:not(.shop__header__ad) {
+    position: relative;
+    z-index: 2;
+}
+
+.shop__lounge {
+    text-align: center;
+    background: var(--header-lounge-bg);
+    padding: var(--spacing-lounge-pd);
+}
+
+@media (max-width: 800px) {
+    .shop__header__nav {
+        width: var(--content-width-primary);
+    }
+}

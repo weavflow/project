@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+React Router 기반으로 CRUD 구현
 
-## Getting Started
+세부 내용으로 상태 관리, 접근 제어, 낙관적 업데이트, UX 개선 사항까지 포함한 일정 관리 어플리케이션
 
-First, run the development server:
+라우팅은 Layout 패턴을 사용하여 Header, Footer의 공통 UI분리 진행.
+각 페이지는 목록, 상세, 수정, 상태 변경 등으로 역할 분리를 진행.
+전체 목록와 상태 변경 페이지에서 검색어 입력을 통한 URL 상태 동기화와 실시간 필터 검색 구현.
+수정 페이지에서는 각각 서버 데이터와 사용자 수정 데이터를 분리해서 관리.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+데이터의 신뢰성와 일관성을 보장하기 위해 모든 시간은 DB에서 자동 처리.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+React Query의 동작 원리를 이해하기 위해서 직접 구조를 구현.
+    useServiceMutation
+        - 요청 실행
+            호출부에서만 수정 or 삭제 인지, 해당 훅에선 재사용 가능한 패턴으로 분리.
+        - 낙관적 업데이트
+            바로 실행이 되기 보단 UI에서 먼저 실행이 된 이후에 서버 처리가 되는 구조로 설계.
+        - rollback
+            실행에서 오류 발생 혹은 서버 오류로 인한 실패 시 UI만 되돌리면 되는 구조로 설계.
+        - success / error 분리
+            현 프로젝트의 구조를 기준으로 수정과 삭제는 다른 방향성을 가진 구조로 설계함을 판단하여
+            각각 성공과 실패를 분리했고, 수정과 삭제도 다른 성공으로 분리를 진행.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Input & Edit
+추가와 수정페이지는 현재 구조에서 공통 UI가 존재하지만 통합하면 조건 분기가 많아 오히려 복잡도만 증가함에 따라 각 페이지를 분리.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+useServiceAccess
+수정과 상세정보 페이지에 직접 URL 접근과 같은 비정상적 접근 흐름을 UX 단계에서 제어하기 위해 구현.
+    - sessionStorage사용
+    - TTL 기반 접근 제한
 
-## Learn More
+데이터의 일관성과 무결성을 보장하기 위해 등록, 수정, 삭제의 시간은 서버에서 관리하도록 분리.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+해당 프로젝트는 단순한 일정 관리 어플리케이션이지만 추가 확장에 대응해 재사용 가능한 패턴과 구조 확장이 가능한 패턴을 사용하여
+데이터 구조가 변경되어도 프론트의 수정 범위를 최소화하였음.
