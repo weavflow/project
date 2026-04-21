@@ -1,0 +1,3 @@
+id,name,image
+1,ad,/ad/ad_1.jpg
+2,ad,/ad/ad_2.jpg

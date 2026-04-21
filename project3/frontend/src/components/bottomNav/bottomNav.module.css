@@ -1,0 +1,150 @@
+/* 하단 nav */
+.shop__bottom__nav {
+    z-index: 500;
+}
+
+.bottom__nav__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    justify-content: space-between;
+    text-align: center;
+
+    list-style-type: none;
+    padding-bottom: 1rem;
+}
+
+/*
+    nav__item의 바로 밑에 bottom__list가 열리는 구조를 만들기 위해선
+    li의 속성에 position: relative를 추가하고
+    bottom__list의 속성에 absolute를 추가하면
+    가장 가까운 position: relative 부모를 찾기 때문에
+    UX상에서 바로 밑에서 열리는 구조처럼 만들 수 있다.
+*/
+
+/*
+    bold속성을 span만 주었는데도 dropdown까지 bold가 먹는 원인
+    font-weight 상속 문제가 가장 크다.
+    1. span에 hover이 발생
+    2. span의 font-weight: bold;
+    3. 브라우저 렌더링 과정에서 부모의 computed 스타일이 bold로 계산되는 케이스 발생.
+    만약 이런 경우 더 자주 발생.
+    - li에 font-weight를 명시하지 않은 경우
+    - CSS 모듈/스코프 스타일에서 우선순위가 꼬인 경우
+    - span 태그가 inline이라 line box 단위로 영향이 퍼지는 경우
+
+    해결 방안으로는
+    bottom__list에 font-weight: initial; 혹은 font-weight: 400; 명시하기
+    span 대상에 display: inline-block; 명시하기
+    상위 부모 요소에 font-weight: initial; 혹은 font-weight: 400; 명시하기
+
+    단 이렇게 되면 hover시에는 정상적으로 나오지만
+    bottom__list가 열려있는 상황에서 hover 해제 시 첫 번째 자식 요소가
+    font-weight: 700;이 되어버리는 상황이 발생하게됨.
+*/
+
+.bottom__nav__item {
+    font-weight: 400;
+    position: relative;
+}
+
+.nav__label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bottom__nav__item:not(:hover) .nav__label {
+    font-weight: 400;
+}
+
+.nav__label:hover {
+    font-weight: 700;
+}
+
+.bottom__dropdown {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+
+    width: max-content;
+    /*
+    dropdown에서 사용한 <a>태그로 인한 글자 세로 표시 문제
+    <Link> = <a>
+    a태그는 기본이 inline이지만
+    css 모듈에서 스타일이 들어가면 block로 동작되는 경우가 많기 때문에
+    줄바꿈이 발생하면서 자연스럽게 세로로 표시가 됨.
+    따라서 min-width: max-content;를 명시해주면
+    내용 길이에 맞게 width가 늘어나서 가로로 표시가 됨.
+
+    또한 자식요소에 white-space: nowrap;를 명시하여
+    요소 내의 텍스트가 자동 줄바꿈을 하지 않고 모든 텍스트를 한줄로 표시하게 설정함.
+    */
+
+    border: var(--border-primary);
+    border-radius: 0.3rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 999;
+    margin-top: 0.5rem;
+    text-align: center;
+    font-weight: 400;
+
+    transform: translateZ(0);
+}
+/*
+    nav__label:hover시 bottom__list 전체 font-weight: 400;
+    단, nav__label:not hover시 bottom__list의 첫 번째 자식만 font-weight: 700;
+    해당 상황이 발생하는 원인
+    상속과 <a>태그의 기본 스타일 + 렌더링 우선순위 충돌 원인
+
+    현재 nav__label:hover시 부모 li 내부 텍스트에 컨텍스트 영향을 끼침
+    그러나 bottom__list이 열려있는 상태에서 hover 해제 시에는
+    렌더링 트리에서 첫 번째 텍스트 노드에 영향이 잔존함.
+
+    특히 첫 번째 자식인 <a>태그(<Link>)가 DOM상 가장 먼저 이어지는 텍스트 노드이자
+    line box 상에서 "연속 텍스트" 로 처리되기 때문에
+    위 상황처럼 hover가 해제되어도 이전의 weight에 영향을 받는 요소가 됨.
+
+    따라서 해결 방안으로는
+    1. bottom__list를 렌더링 컨텍스트에서 분리하기
+    transform: translateZ(0);
+
+    2. 좀더 강력한 분리
+    will-change: transform 혹은 contain: layout;
+
+    3. 텍스트 흐름 완전 차단하기
+    isolation: isolate;
+
+    4. 첫 번째 자식 요소만 강제 보정하기
+    :first-child만 font-weight: 400;
+
+    transform이나 isolation으로 해결되는 이유
+
+    GPU 레이어로 분리하게 되면 텍스트 렌더링 컨텍스트가 끊기게 됨.
+    따라서 bottom__list까지 font-weight 속성이 넘어오지 않게 됨.
+*/
+.bottom__list {
+    padding: 0;
+    margin: 0;
+}
+
+.bottom__list__item {
+    font-weight: 400;
+    list-style: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.bottom__list__item:hover {
+    background-color: #eee;
+}
+
+@media (max-width: 800px) {
+    .shop__bottom__nav {
+        font-size: var(--mobile-font-size-default);
+        padding: var(--mobile-spacing-unit-pd);
+    }
+}
