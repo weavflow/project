@@ -35,8 +35,8 @@ export default function TopEnd() {
             <div className={styles.shop__header__topEnd__container}>
                 <nav className={styles.topEnd__nav}>
                     <div className={styles.topEnd__nav__right}>
-                        <Link href={"/"}>WeavFlow</Link>
-                        <Link href={"/"}>스토어</Link>
+                        <Link href={"/public"}>WeavFlow</Link>
+                        <Link href={"/public"}>스토어</Link>
                     </div>
 
                     <div

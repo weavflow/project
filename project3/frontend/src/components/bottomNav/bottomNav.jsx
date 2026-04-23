@@ -3,7 +3,7 @@ import styles from "./bottomNav.module.css";
 import Link from "next/link"
 import {useState, useRef, useEffect} from "react";
 
-export default function BottomNav({theme}) {
+export default function BottomNav() {
     const [isClicked, setIsClicked] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -30,12 +30,7 @@ export default function BottomNav({theme}) {
     // Router 이동 시 dropdown 창 닫기
 
     return (
-        <nav
-            className={styles.shop__bottom__nav}
-            style={{
-                color: theme.text
-            }}
-        >
+        <nav className={styles.shop__bottom__nav}>
             <ul className={styles.bottom__nav__list}>
                 <li className={styles.bottom__nav__item}>
                     <span className={styles.nav__label}>

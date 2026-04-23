@@ -12,15 +12,13 @@ import Indicator from "@/components/indicator/indicator";
 // -> transition off + index 점프
 // -> 다음 순서에서 transition on
 
-export default function AdBanner({onThemeChange}) {
+export default function AdBanner() {
     // ad 데이터 & 에러
     const [ad, setAd] = useState([]);
     const [error, setError] = useState(null);
 
     // 현재 보여줄 ad 이미지 순서
     const [index, setIndex] = useState(1);
-    // 이전에 보여준 ad 이미지 순서
-    const [prevIndex, setPrevIndex] = useState(null);
     // 애니메이션 동작
     const [isTransition, setIsTransition] = useState(true);
 
@@ -43,7 +41,7 @@ export default function AdBanner({onThemeChange}) {
     // 원본 : [A, B]
     // 렌더링 : [B, A, B, A]
     // index:   0  1  2  3
-    const adList =
+    const adList = 
         ad.length > 0
             ? [ad[ad.length - 1], ...ad, ad[0]]
             : [];
@@ -116,14 +114,9 @@ export default function AdBanner({onThemeChange}) {
 
         isAnimatingRef.current = true;
 
-        setIndex(prev => {
-            const nextIndex =
-                typeof next === "function" ? next(prev) : next;
-
-            setPrevIndex(prev);
-
-            return nextIndex;
-        });
+        setIndex(prev =>
+            typeof next === "function" ? next(prev) : next
+        );
     }
 
     const handleIndicator = (i) => {
@@ -168,7 +161,7 @@ export default function AdBanner({onThemeChange}) {
 
         return () => stopAutoSlide();
     }, [ad.length]);
-
+    
     // 초기값 보정
     useEffect(() => {
         if (ad.length > 0) {
@@ -184,14 +177,8 @@ export default function AdBanner({onThemeChange}) {
             ? (index - 1 + ad.length) % ad.length
             : 0;
 
-    useEffect(() => {
-        if (!ad.length) return;
-
-        const theme = ad[currentIndex]?.theme;
-        onThemeChange(theme);
-    }, [currentIndex, ad]);
-
     if (error) return <>{error.message}</>;
+
     /* loading="lazy"
        네트워크 + 렌더링 타이밍 최적화
          1. 초기 로딩 성능 개선
@@ -224,48 +211,25 @@ export default function AdBanner({onThemeChange}) {
                 className={styles.ad__track}
                 onTransitionEnd={handleTransition}
                 style={{
-                    transform: `translate3d(0, -${index * 100}, 0)`,
-                    transition: isTransition
-                        ? "transform 0.6s ease-out"
-                        : "none",
-                    willChange: isTransition? "transform, opacity" : "auto"
+                    transform: `translateX(-${index * 100}%)`,
+                    transition: isTransition ? "transform 0.8s ease-out" : "none",
+                    willChange: isTransition ? "transform": "auto",
                 }}
             >
                 {adList.map((item, i) => {
                     if (!item) return null;
 
                     const isFirst = i === 1;
-
+                    
                     return (
-                        <div
-                            key={i}
-                            className={styles.ad__image}
-                            style={{
-                                transform: i === index
-                                    ? "scale(1)"
-                                    : i === prevIndex
-                                        ? "scale(1.1)"
-                                        : "scale(0.95)",
-                                opacity: i === index
-                                    ? 1
-                                    : i === prevIndex
-                                        ? 0.1
-                                        : 0.1,
-                                zIndex: i === index ? 2 : 1,
-                                transition: isTransition
-                                    ? "transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s"
-                                    : "none",
-                                willChange: isTransition ? "transform": "auto",
-                            }}
-                        >
-                            <img
-                                className={styles.ad__item}
-                                src={item.image}
-                                alt={item.name}
-                                loading={isFirst ? "eager" : "lazy"}
-                                decoding={isFirst ? "sync" : "async"}
-                            />
-                        </div>
+                        <img
+                        key={i}
+                        className={styles.ad__image}
+                        src={item.image}
+                        alt={item.name}
+                        loading={isFirst ? "eager" : "lazy"}
+                        decoding={isFirst ? "sync" : "async"}
+                        />
                     );
                 })}
             </div>
@@ -278,17 +242,11 @@ export default function AdBanner({onThemeChange}) {
 
             <button
                 className={styles.ad__prev}
-                style={{
-                    color: ad[currentIndex]?.theme.text
-                }}
                 onClick={handlePrev}
             >이전</button>
 
             <button
                 className={styles.ad__next}
-                style={{
-                    color: ad[currentIndex]?.theme.text
-                }}
                 onClick={handleNext}
             >다음</button>
         </div>

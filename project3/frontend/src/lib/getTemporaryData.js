@@ -1,3 +1,4 @@
+import {ParseTxtToJson} from "@/utils/parse";
 import {promises as fs} from "fs";
 import path from "path";
 
@@ -10,7 +11,7 @@ export async function getTemporaryData({props}) {
         const filePath = path.join(process.cwd(), "src", "data", props);
         const text = await fs.readFile(filePath, "utf8");
 
-        const data = JSON.parse(text);
+        const data = ParseTxtToJson(text);
 
         return Response.json(data, {status: 200});
     } catch (err) {

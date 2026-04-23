@@ -1,14 +1,13 @@
 .ad__wrapper {
-    position: relative;
+    position: absolute;
+    inset: 0;
     overflow: hidden;
-    width: var(--header-ad-width);
-    height: var(--header-ad-height);
+
     z-index: 1;
 }
 
 .ad__track {
-    position: relative;
-    width: var(--header-ad-width);
+    display: flex;
     height: var(--header-ad-height);
     /*will-change: transform;*/
 /*
@@ -27,25 +26,16 @@
 
 /* 페이지 main-header 광고*/
 .ad__image {
+    display: block;
     background-color: #aaa;
-    position: absolute;
-    inset: 0;
+
     width: var(--header-ad-width);
     height: var(--header-ad-height);
     flex-shrink: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-origin: center;
-
+    object-fit: contain;
     filter: brightness(0.9);
-}
 
-.ad__item {
-    width: var(--header-ad-width);
-    height: var(--header-ad-height);
-    object-fit: cover;
+    z-index: 1;
 }
 
 .ad__prev,
@@ -54,6 +44,7 @@
     top: 50%;
     transform: translateY(-50%);
 
+    color: white;
     border: none;
 
     width: 40px;

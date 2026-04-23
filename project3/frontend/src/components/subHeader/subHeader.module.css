@@ -1,0 +1,22 @@
+.shop__header {
+    width: var(--content-width-primary);
+    position: relative;
+}
+
+/* 페이지 내 nav 중앙 고정 */
+.shop__header__nav {
+    width: var(--content-width-secondary);
+    justify-self: center;
+    border-bottom: var(--border-secondary);
+}
+
+.shop__header > *:not(.shop__header__ad) {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 800px) {
+    .shop__header__nav {
+        width: var(--content-width-primary);
+    }
+}

@@ -34,6 +34,7 @@
 }
 
 .top__nav__logo {
+    color: var(--logo-primary);
     justify-self: center;
 
     font-size: var(--logo-font-size);

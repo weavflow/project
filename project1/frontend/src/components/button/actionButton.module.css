@@ -1,0 +1,27 @@
+.td__btn{
+    border: none;
+    border-radius: 4px;
+    padding: 14px;
+    cursor: pointer;
+    background-color: #1f2837;
+    color: white;
+}
+
+.td__btn.delete {
+    background-color: #1f2837;
+}
+
+.td__btn.update {
+    background-color: #1f2960;
+    padding: 10px 30px;
+}
+
+.td__btn.editDelete {
+    border-radius: 8px;
+    padding: 14px;
+}
+
+.td__btn:hover {
+    background-color: #474876;
+    transition: background-color 0.5s ease;
+}

@@ -7,9 +7,9 @@ export default function page() {
 
     return (
         <>
-            <section className={styles.product__container}>
+            <div className={styles.product__container}>
                 <BestList />
-            </section>
+            </div>
         </>
     )
 }

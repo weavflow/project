@@ -1,6 +1,3 @@
-// JSON파일이 아닌 TEXT파일로 진행헀을 경우
-// 해당 parse함수가 실행이 되어야만 JSON처럼 진행할 수 있음.
-
 export function ParseTxtToJson(text) {
     const lines = text.trim().split(/\r?\n/);
     // 문자열 -> 줄 단위 배열로 변환

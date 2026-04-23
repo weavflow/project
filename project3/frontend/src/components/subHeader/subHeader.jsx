@@ -1,19 +1,12 @@
-"use client"
-import styles from './header.module.css';
+import styles from './subHeader.module.css';
 import TopEnd from "@/components/topEnd/topEnd";
 import TopNav from "@/components/topNav/topNav";
 import BottomNav from "@/components/bottomNav/bottomNav";
-import AdBanner from "@/components/adBanner/AdBanner";
 
-export default function Header({hasAd = true}) {
+export default function SubHeader() {
     return (
-        <header className={styles.shop__header} data-ad={hasAd}>
-            <div className={styles.shop__header__ad}>
-                {hasAd && <AdBanner />}
-            </div>
-
+        <header className={styles.shop__header}>
             <TopEnd />
-
             <section className={styles.shop__header__nav}>
                 <TopNav />
                 <BottomNav />
