@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "eclipse",
+        "quantity": 1,
+        "price": 3000,
+        "image": "/images/ex1.jpg"
+    },
+    {
+        "id": 2,
+        "name": "eclipse",
+        "quantity": 3,
+        "price": 3000,
+        "image": "/images/ex2.jpg"
+    },
+    {
+        "id": 3,
+        "name": "eclipse",
+        "quantity": 2,
+        "price": 6000,
+        "image": "/images/ex3.jpg"
+    },
+    {
+        "id": 4,
+        "name": "eclipse",
+        "quantity": 2,
+        "price": 6000,
+        "image": "/images/ex4.jpg"
+    },
+    {
+        "id": 5,
+        "name": "eclipse",
+        "quantity": 2,
+        "price": 6000,
+        "image": "/images/ex5.jpg"
+    },
+]

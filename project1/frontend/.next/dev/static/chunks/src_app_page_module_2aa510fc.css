@@ -1,0 +1,28 @@
+/* [project]/src/app/page.module.css [app-client] (css) */
+:root {
+  --background: #fff;
+  --text-primary: black;
+}
+
+.page-module___8aEwW__main {
+  min-height: 100vh;
+  font-family: var(--font-geist-sans);
+  background-color: var(--background);
+  color: var(--text-primary);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.page-module___8aEwW__button {
+  margin: 16px;
+  padding: 12px;
+}
+
+@media (max-width: 600px) {
+  .page-module___8aEwW__main {
+    padding: 48px 24px;
+  }
+}
+
+/*# sourceMappingURL=src_app_page_module_2aa510fc.css.map*/

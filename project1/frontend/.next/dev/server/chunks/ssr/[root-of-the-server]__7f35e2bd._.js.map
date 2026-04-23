@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 17, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/app/page.module.css [app-rsc] (css module)"],"sourcesContent":["__turbopack_context__.v({\n  \"button\": \"page-module___8aEwW__button\",\n  \"main\": \"page-module___8aEwW__main\",\n});\n"],"names":[],"mappings":"AAAA;AACA;AACA;AACA"}},
+    {"offset": {"line": 25, "column": 0}, "map": {"version":3,"sources":["file:///A:/project/project1/frontend/src/app/page.tsx"],"sourcesContent":["import Link from \"next/link\";\r\nimport styles from \"./page.module.css\";\r\n\r\nexport default function Home(){\r\n  return (\r\n  <main className={styles.main}>\r\n      <nav className={styles.nav}>\r\n          <button className={styles.button}>\r\n              <Link href={\"/reserve\"}>예약 하기</Link>\r\n          </button>\r\n          <button className={styles.button}>예약 목록</button>\r\n          <button className={styles.button}>예약 상세 조회</button>\r\n          <button className={styles.button}>상태 변경</button>\r\n      </nav>\r\n  </main>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;AACA;;;;AAEe,SAAS;IACtB,qBACA,8OAAC;QAAK,WAAW,yIAAM,CAAC,IAAI;kBACxB,cAAA,8OAAC;YAAI,WAAW,yIAAM,CAAC,GAAG;;8BACtB,8OAAC;oBAAO,WAAW,yIAAM,CAAC,MAAM;8BAC5B,cAAA,8OAAC,0LAAI;wBAAC,MAAM;kCAAY;;;;;;;;;;;8BAE5B,8OAAC;oBAAO,WAAW,yIAAM,CAAC,MAAM;8BAAE;;;;;;8BAClC,8OAAC;oBAAO,WAAW,yIAAM,CAAC,MAAM;8BAAE;;;;;;8BAClC,8OAAC;oBAAO,WAAW,yIAAM,CAAC,MAAM;8BAAE;;;;;;;;;;;;;;;;;AAI5C"}}]
+}
