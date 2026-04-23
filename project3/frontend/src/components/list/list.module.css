@@ -1,5 +1,5 @@
 .product__container {
-    width: 70%;
+    width: var(--content-width-secondary);
     justify-self: center;
 }
 
@@ -8,13 +8,11 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid;
+    padding: 2rem 1rem;
 }
 
-.product__info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 8px;
+.product__subLogo {
+    font-size: var(--font-weight-bold);
 }
 
 .product__list {
@@ -30,7 +28,7 @@
 }
 
 .product__list__item {
-    margin: 1rem 0;
+    margin: 1rem 1rem;
     padding: 1rem 0;
 }
 

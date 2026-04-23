@@ -4,7 +4,7 @@ export default function BestList() {
 
     return (
         <>
-            <List label={"베스트"} type={"products"} />
+            <List label={"베스트"} type={"best"} />
         </>
     )
 }

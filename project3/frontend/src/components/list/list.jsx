@@ -1,5 +1,6 @@
 "use client"
 import styles from "./list.module.css";
+import SubBanner from "@/components/subBanner/subBanner";
 import {useState, useEffect} from "react";
 import Link from "next/link";
 import LoadData from "@/lib/loadData"
@@ -19,13 +20,12 @@ export default function List({label, type}) {
         <>
             <section className={styles.product__container}>
                 <div className={styles.product__label}>
-                    <h3>{label}</h3>
+                    <h2
+                        className={styles.product__subLogo}
+                    >{label}</h2>
                     <p><Link href={"/"}>홈</Link> {`>`} <strong>{label} (총 {list.length}개)</strong></p>
                 </div>
-                <div className={styles.product__info}>
-                    <p className={"text-sm"}><strong>서울시 강남구</strong> 도착기준</p>
-                    <p>배송 안내</p>
-                </div>
+                <SubBanner type={type} />
 
                 <div className={styles.product__list}>
                     {list.map((item) => (
