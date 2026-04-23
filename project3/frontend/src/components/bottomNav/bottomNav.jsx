@@ -1,74 +1,38 @@
 "use client"
 import styles from "./bottomNav.module.css";
-import Link from "next/link"
-import {useState, useRef, useEffect} from "react";
+import LoadData from "@/lib/loadData";
+import {useState, useEffect} from "react";
+import {NavItem} from "@/components/bottomNav/navItem/navItem";
 
-export default function BottomNav() {
-    const [isClicked, setIsClicked] = useState(false);
-    const dropdownRef = useRef(null);
-
-    const handleClick = () => {
-        setIsClicked(prev => !prev);
-    }
+export default function BottomNav({theme}) {
+    const [navList, setNavList] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        function handleKeyClick(e) {
-            if (!dropdownRef.current) return;
+        setError(null);
+        LoadData(setNavList, setError, "nav");
+    }, []);
 
-            if (!dropdownRef.current.contains(e.target)) {
-                setIsClicked(false);
-            }
-        }
+    useEffect(() => {
+        console.log(navList);
+        console.log(navList.map((item) => item.children));
+    }, [navList])
 
-        document.addEventListener("mousedown", handleKeyClick);
-
-        return () => {
-            document.removeEventListener("mousedown", handleKeyClick);
-        }
-    }, [])
-
-    // Router 이동 시 dropdown 창 닫기
+    if (error) return <>{error.message}</>;
 
     return (
-        <nav className={styles.shop__bottom__nav}>
+        <nav
+            className={styles.shop__bottom__nav}
+            style={{
+                color: theme.text
+            }}
+        >
             <ul className={styles.bottom__nav__list}>
-                <li className={styles.bottom__nav__item}>
-                    <span className={styles.nav__label}>
-                        <Link href={"/shop/live"}>쇼핑</Link>
-                    </span>
-                </li>
-                <li className={styles.bottom__nav__item}>
-                    <span className={styles.nav__label}>
-                        <Link href={"/shop/best"}>베스트</Link>
-                    </span>
-                </li>
-                <li
-                    ref={dropdownRef}
-                    className={styles.bottom__nav__item}>
-                    <span
-                        className={styles.nav__label}
-                        onClick={handleClick}>
-                        전체▾
-                    </span>
-                    {/* Dropdown box */}
-                    {isClicked && <div className={styles.bottom__dropdown}>
-                        <ul className={styles.bottom__list}>
-                            <li className={styles.bottom__list__item}>
-                                <Link href={"/"}>리스트1</Link>
-                            </li>
-
-                            <li className={styles.bottom__list__item}>
-                                <Link href={"/"}>리스트2</Link>
-                            </li>
-                        </ul>
-                    </div>}
-                </li>
-                <li  className={styles.bottom__nav__item}>
-                    <span className={styles.nav__label}>
-                    <Link href={"/"}>장바구니</Link>
-                    </span>
-                </li>
+                {navList.map((item, index) => (
+                    <NavItem key={index} item={item} />
+                ))}
             </ul>
+
         </nav>
     )
 }

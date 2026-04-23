@@ -3,7 +3,7 @@ import List from "../list";
 export default function LiveList() {
     return (
         <>
-            <List URL={"/api/data/lives"} />
+            <List label={"쇼핑"} type={"live"} />
         </>
     )
 }

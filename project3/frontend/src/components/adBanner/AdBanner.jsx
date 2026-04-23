@@ -12,15 +12,15 @@ import Indicator from "@/components/indicator/indicator";
 // -> transition off + index 점프
 // -> 다음 순서에서 transition on
 
-export default function AdBanner() {
+export default function AdBanner({onThemeChange}) {
     // ad 데이터 & 에러
     const [ad, setAd] = useState([]);
     const [error, setError] = useState(null);
 
     // 현재 보여줄 ad 이미지 순서
-    const [index, setIndex] = useState(1);
-    // 애니메이션 동작
-    const [isTransition, setIsTransition] = useState(true);
+    const [index, setIndex] = useState(0);
+    // 이전 ad 이미지 순서
+    const [prevIndex, setPrevIndex] = useState(null);
 
     // 데이터 불러오기 query
     const type = "ad";
@@ -30,6 +30,8 @@ export default function AdBanner() {
     const isAnimatingRef = useRef(false);
     // 버튼 클릭 시 autoplay 리셋
     const intervalRef = useRef(null);
+    // 애니메이션 동작 감지
+    const transitionRef = useRef([]);
 
     // 데이터 불러오기
     useEffect(() => {
@@ -41,12 +43,13 @@ export default function AdBanner() {
     // 원본 : [A, B]
     // 렌더링 : [B, A, B, A]
     // index:   0  1  2  3
-    const adList = 
-        ad.length > 0
-            ? [ad[ad.length - 1], ...ad, ad[0]]
-            : [];
+    // const adList =
+    //     ad.length > 0
+    //         ? [ad[ad.length - 1], ...ad, ad[0]]
+    //         : [];
     // 왼쪽과 오른쪽 끝에서 자연스럽게 이전&다음으로 움직이는게 가능
     // 단, index 0, 4은 가짜 위치이기 때문에 다시 진짜 위치로 점프가 필요함.
+    // 해당 배열은 무한 슬라이드 이동인 경우에 쓰이고, 페이드 이동인 경우엔 쓰이지 않음.
 
     // 이전 & 다음 버튼
     const handlePrev = () => {
@@ -59,43 +62,52 @@ export default function AdBanner() {
         moveTo(index + 1);
         startAutoSlide()
     }
-    // 범위를 Math.min & max로 [0 ~ ad.length + 1]로 제한함.
-    // clone 영역까지 포함
 
-    // 끝 <-> 처음 이동처리
-    const handleTransition = () => {
-        if (!isTransition) return;
-
-        if (index === 0) {
-            setIsTransition(false);
-            setIndex(ad.length);
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    setIsTransition(true);
-                    isAnimatingRef.current = false;
-                });
-            });
-
-            return;
-        }
-
-        if (index === ad.length + 1) {
-            setIsTransition(false);
-            setIndex(1);
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    setIsTransition(true);
-                    isAnimatingRef.current = false;
-                });
-            });
-
-            return;
-        }
+    const handleTransitionEnd = (i) => (e) => {
+        // 현재 애니메이션 적용된 요소
+        if (i !== index) return;
+        // opacity 기준으로만 사용
+        if (e.propertyName !== "opacity") return;
+        // 현재 ref를 기준으로 이벤트는 1번만 받기
+        if (!isAnimatingRef.current) return;
 
         isAnimatingRef.current = false;
     }
+
+    // 끝 <-> 처음 이동처리
+    // const handleTransition = () => {
+    //     if (!isTransition) return;
+    //
+    //     if (index === 0) {
+    //         setIsTransition(false);
+    //         setIndex(ad.length);
+    //
+    //         requestAnimationFrame(() => {
+    //             requestAnimationFrame(() => {
+    //                 setIsTransition(true);
+    //                 isAnimatingRef.current = false;
+    //             });
+    //         });
+    //
+    //         return;
+    //     }
+    //
+    //     if (index === ad.length + 1) {
+    //         setIsTransition(false);
+    //         setIndex(1);
+    //
+    //         requestAnimationFrame(() => {
+    //             requestAnimationFrame(() => {
+    //                 setIsTransition(true);
+    //                 isAnimatingRef.current = false;
+    //             });
+    //         });
+    //
+    //         return;
+    //     }
+    //
+    //     isAnimatingRef.current = false;
+    // }
     // 왼쪽으로 계속 이동 = index : 1 -> 0 (C의 clone)
     // 그 다음 0 (C의 clone) -> ad.length (C)
     // transition 없이 순간이동으로 진짜 위치로 점프하는 부분
@@ -114,9 +126,14 @@ export default function AdBanner() {
 
         isAnimatingRef.current = true;
 
-        setIndex(prev =>
-            typeof next === "function" ? next(prev) : next
-        );
+        setIndex(prev => {
+            const nextIndex =
+                typeof next === "function" ? next(prev) : next
+
+            setPrevIndex(prev);
+
+            return (nextIndex + ad.length) % ad.length;
+        });
     }
 
     const handleIndicator = (i) => {
@@ -129,7 +146,7 @@ export default function AdBanner() {
         stopAutoSlide();
 
         intervalRef.current = setInterval(() => {
-            moveTo(prev => (prev + 1));
+            moveTo(prev => prev + 1);
         }, 3000);
     };
 
@@ -165,17 +182,30 @@ export default function AdBanner() {
     // 초기값 보정
     useEffect(() => {
         if (ad.length > 0) {
-            setIndex(1);
+            setIndex(0);
         }
     }, [ad.length]);
     // 첫 번째는 클론이 아닌 진짜 데이터부터 시작해야 하기 때문에
     // 초기값을 무조건 보정해주어야 함.
 
     // 클론을 포함하여 실제 인덱스 찾기
-    const currentIndex =
-        ad.length > 0
-            ? (index - 1 + ad.length) % ad.length
-            : 0;
+    // const currentIndex =
+    //     ad.length > 0
+    //         ? (index - 1 + ad.length) % ad.length
+    //         : 0;
+    // 슬라이드 이동 애니메이션이 아닌
+    // 페이드 애니메이션이라면 실제 index로 그대로 사용
+
+    // 광고별 테마
+    useEffect(() => {
+        if (!ad.length) return;
+        const theme = ad[index]?.theme;
+
+        if (theme) {
+            onThemeChange(theme);
+        }
+
+    }, [index, ad]);
 
     if (error) return <>{error.message}</>;
 
@@ -206,48 +236,80 @@ export default function AdBanner() {
     return (
         <div className={styles.ad__wrapper}>
             {/*  항상 왼쪽으로 이동 하는 애니메이션  */}
+            {/* 만약에 scale와 opacity으로 index이동을 애니메이션으로 하게 되면
+                ad__track의 style는 자동적으로 주석처리 혹은 비활성화를 진행해야 하며
+                활성화가 되어 있는 경우 애니메이션 충돌이 나면서 이미지가 보이지 않게 됨.
+             */}
             <div
                 ref={trackRef}
                 className={styles.ad__track}
-                onTransitionEnd={handleTransition}
-                style={{
-                    transform: `translateX(-${index * 100}%)`,
-                    transition: isTransition ? "transform 0.8s ease-out" : "none",
-                    willChange: isTransition ? "transform": "auto",
-                }}
+                // onTransitionEnd={handleTransition}
+                // style={{
+                //     transform: `translate3d(0, -${index * 100}%, 0)`,
+                //     transition: isTransition ? "transform 0.8s ease-out" : "none",
+                //     willChange: isTransition ? "transform": "auto",
+                // }}
+                // 애니메이션 이중 충돌로 인한 주석 처리
             >
-                {adList.map((item, i) => {
+                {ad.map((item, i) => {
                     if (!item) return null;
 
                     const isFirst = i === 1;
                     
                     return (
-                        <img
-                        key={i}
-                        className={styles.ad__image}
-                        src={item.image}
-                        alt={item.name}
-                        loading={isFirst ? "eager" : "lazy"}
-                        decoding={isFirst ? "sync" : "async"}
-                        />
+                        <div
+                            key={i}
+                            ref={e => transitionRef.current[i] = e}
+                            className={styles.ad__image}
+                            onTransitionEnd={handleTransitionEnd(i)}
+                            style={{
+                                transform: i === index
+                                    ? "scale(1)"
+                                    : i === prevIndex
+                                        ? "scale(1.15)"
+                                        : "scale(0.95)",
+                                opacity: i === index
+                                    ? 1
+                                    : i === prevIndex
+                                        ? 0.2
+                                        : 0.2,
+                                zIndex: i === index ? 2 : 1,
+                                transition: "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease"
+                            }}
+                        >
+                            <img
+                            key={i}
+                            className={styles.ad__item}
+                            src={item.image}
+                            alt={item.name}
+                            loading={isFirst ? "eager" : "lazy"}
+                            decoding={isFirst ? "sync" : "async"}
+                            />
+                        </div>
                     );
                 })}
             </div>
 
             <Indicator
                 array={ad}
-                current={currentIndex}
+                current={index}
                 onChange={handleIndicator}
             />
 
             <button
                 className={styles.ad__prev}
                 onClick={handlePrev}
+                style={{
+                    color: ad[index]?.theme.text
+                }}
             >이전</button>
 
             <button
                 className={styles.ad__next}
                 onClick={handleNext}
+                style={{
+                    color: ad[index]?.theme.text
+                }}
             >다음</button>
         </div>
     )

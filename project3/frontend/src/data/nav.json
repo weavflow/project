@@ -1,0 +1,25 @@
+[
+  {
+    "type" : "live",
+    "label": "쇼핑",
+    "path": "/shop/live"
+  },
+  {
+    "type" : "best",
+    "label": "베스트",
+    "path" : "/shop/best"
+  },
+  {
+    "type": "products",
+    "label": "전체",
+    "children": [
+      {"label":  "리스트1", "path": "/shop/products/list1"},
+      {"label":  "리스트2", "path": "/shop/products/list2"}
+    ]
+  },
+  {
+    "type": "cart",
+    "label": "장바구니",
+    "path": "/shop/cart"
+  }
+]

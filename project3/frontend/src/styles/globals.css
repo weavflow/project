@@ -11,6 +11,7 @@
   --text-color-secondary: #fff;
 
   --logo-color: navy;
+  --logo-color-secondery: #fff;
 
   --spacing-pd: 8px;
   --spacing-mg: 8px;
@@ -18,9 +19,11 @@
 
   --content-width-primary: 100%;
   --content-width-secondary: 90%;
+  --content-width-third: 70%;
 
   --border-primary: 1px solid #ccc;
   --border-secondary: 1px solid #eee;
+  --border-third: 2px solid;
 }
 
 body {

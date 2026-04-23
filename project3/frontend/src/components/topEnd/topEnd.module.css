@@ -27,7 +27,7 @@
 }
 
 .shop__header__topEnd__container {
-    width: var(--content-width-secondary);
+    width: var(--content-width-third);
     justify-self: center;
 }
 

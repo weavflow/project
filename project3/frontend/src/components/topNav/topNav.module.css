@@ -33,6 +33,10 @@
     position: relative;
 }
 
+.top__nav__btn:disabled {
+    opacity: 0.4;
+}
+
 .top__nav__logo {
     color: var(--logo-primary);
     justify-self: center;

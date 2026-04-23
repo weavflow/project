@@ -2,10 +2,9 @@
     --border-button: var(--border-primary);
 
     --logo-primary: var(--logo-color);
-    --logo-secondary: #fff;
+    --logo-secondary: var(--logo-color-secondery);
 
     --logo-font-size: 2.5rem;
-
     --header-opacity: 40%;
 
     --mobile-font-size-default: 0.8rem;
@@ -15,24 +14,32 @@
 
     --spacing-top-mg: 3rem 0 1.5rem 0;
 
-    --header-ad-width: 100%;
-    --header-ad-height: 100%;
+    --header-ad-width: var(--content-width-primary);
+    --header-ad-height: var(--content-width-primary);
 }
 
 .shop__header {
     width: var(--content-width-primary);
     position: relative;
-    overflow: hidden;
+    border-bottom: var(--border-secondary);
 }
 
 .shop__header[data-ad="true"] {
-    aspect-ratio: 16 / 5;
+    aspect-ratio: 2.4 / 1;
+}
+
+.shop__header__ad {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
 }
 
 /* 페이지 내 nav 중앙 고정 */
 .shop__header__nav {
-    width: var(--content-width-secondary);
+    width: var(--content-width-third);
     justify-self: center;
+    position: relative;
+    z-index: 2;
 }
 
 /*
@@ -86,8 +93,22 @@
 
 .shop__header > *:not(.shop__header__ad) {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
+
+/*
+    광고(.shop__header__ad)는 z-index가 없어서 기본값인 0이 됨.
+    나머지 요소는 z-index: 1
+
+    또한 .ad__wraper에 position: relative를 넣게되면
+    .shop__header__ad 자체가 position: absolute이어도
+    부모가 이미 z-index 상 뒤에 있기 때문에 광고 이미지가 보이지 않게 됨.
+
+    그러나 이 상태에서 광고이미지에 scale 애니메이션을 주게되면 위치가 이상하거나
+    광고 이미지가 안보이는 증상이 발생함.
+
+    따라서 Header에서 광고 레이어를 위로 올리거나 배경 레이어로 분리를 진행해야 함.
+*/
 
 @media (max-width: 800px) {
     .shop__header__nav {

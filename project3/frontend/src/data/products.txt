@@ -1,6 +1,0 @@
-id,name,quantity,price,image
-1,eclipse,1,3000,/images/ex1.jpg
-2,eclipse,3,9000,/images/ex2.jpg
-3,eclipse,2,6000,/images/ex3.jpg
-4,eclipse,2,6000,/images/ex4.jpg
-5,eclipse,2,6000,/images/ex5.jpg

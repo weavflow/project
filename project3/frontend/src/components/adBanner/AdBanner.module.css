@@ -1,14 +1,27 @@
-.ad__wrapper {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-
-    z-index: 1;
+:root {
+    --ad-width: 100%;
+    --ad-height: 100%;
 }
 
+.ad__wrapper {
+    position: relative;
+    width: var(--ad-width);
+    height: var(--ad-height);
+    overflow: hidden;
+}
+
+/*
+    Header에서 광고레이어를 배경레이어로 분리했다면
+    여기서는 ad__wrapper와 ad__track, ad__image, ad__item 모두
+    width: 100%, height: 100%를 명시하고,
+    ad__wrapper, ad__track -> position: relative;
+    ad__image -> position: absolute; inset: 0;
+*/
+
 .ad__track {
-    display: flex;
-    height: var(--header-ad-height);
+    position: relative;
+    width: var(--ad-width);
+    height: var(--ad-height);
     /*will-change: transform;*/
 /*
     GPU 레이어로 올려서 transform 인터폴레이션 안정화
@@ -26,21 +39,29 @@
 
 /* 페이지 main-header 광고*/
 .ad__image {
-    display: block;
-    background-color: #aaa;
+    position: absolute;
+    inset: 0;
 
-    width: var(--header-ad-width);
-    height: var(--header-ad-height);
-    flex-shrink: 0;
-    object-fit: contain;
+    width: var(--ad-width);
+    height: var(--ad-height);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
     filter: brightness(0.9);
 
-    z-index: 1;
+    transform-origin: center;
+}
+
+.ad__item {
+    width: var(--ad-width);
+    height: var(--ad-height);
+    object-fit: cover;
 }
 
 .ad__prev,
 .ad__next {
-    position: absolute;
+    position: relative;
     top: 50%;
     transform: translateY(-50%);
 

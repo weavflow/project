@@ -4,7 +4,7 @@ import styles from "./topNav.module.css";
 import Link from "next/link";
 import {useState, useRef, useEffect} from "react";
 
-export default function TopNav() {
+export default function TopNav({theme}) {
     // 좋아요 버튼
     const [count, setCount] = useState(0);
     const [liked, setLiked] = useState(false);
@@ -77,7 +77,11 @@ export default function TopNav() {
 
     return (
         <nav className={styles.shop__top__nav}>
-            <div className={styles.top__nav__follow}>
+            <div className={styles.top__nav__follow}
+                style={{
+                    color: theme.text
+                }}
+            >
                 <button
                     className={styles.top__nav__btn}
                     disabled={liked}
@@ -89,7 +93,12 @@ export default function TopNav() {
                 <p>관심고객수 {count}</p>
             </div>
 
-            <h2 className={styles.top__nav__logo}>
+            <h2
+                className={styles.top__nav__logo}
+                style={{
+                    color: theme.color
+                }}
+            >
                 <Link href={"/"}>
                     LOGO
                 </Link>
@@ -97,7 +106,11 @@ export default function TopNav() {
 
             <div
                 ref={dropdownRef}
-                className={styles.top__nav__search}>
+                className={styles.top__nav__search}
+                style={{
+                    color: theme.text
+                }}
+            >
                 <button
                     className={styles.top__nav__btn}
                     onClick={handleClick}>
