@@ -34,7 +34,7 @@ export function NavItem({item}) {
 
         return (
             <span className={styles.nav__label}>
-                <Link href={item.path ?? "#"}>{item.label}</Link>
+                <Link href={item.path ?? "#"} state={{data : item.type}}>{item.label}</Link>
             </span>
         )
     }
@@ -57,7 +57,7 @@ export function NavItem({item}) {
                                     key={index}
                                     className={styles.bottom__list__item}
                                 >
-                                    <Link href={child.path ?? "#"}>{child.label}</Link>
+                                    <Link href={child.path ?? "#"} state={{data : item.type}}>{child.label}</Link>
                                 </li>
                             ))}
                         </ul>
