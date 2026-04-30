@@ -12,7 +12,6 @@
     --mobile-font-size-logo: 2rem;
     --mobile-spacing-unit-pd: 0 0.4rem;
 
-    --spacing-top-pd: 1.5rem 0;
     --spacing-top-mg: 3rem 0 1.5rem 0;
 
     --header-ad-width: var(--content-width-primary);
@@ -91,15 +90,6 @@
 
     4. border: 1px solid transparent; 명시
 */
-
-.shop__membership {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    padding: var(--spacing-top-pd);
-    width: 100%;
-    background-color: var(--foreground);
-}
 
 .shop__header > *:not(.shop__header__ad) {
     position: relative;

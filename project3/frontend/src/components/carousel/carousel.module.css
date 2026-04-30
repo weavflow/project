@@ -1,7 +1,36 @@
+.single__item {
+    width: 100%;
+    height: 100%;
+}
+
+.single__item > * {
+    width: 200px;
+    aspect-ratio: 1/1;
+    flex: 0 0 auto;
+}
+
+.single__item img {
+    object-fit: cover;
+}
+
 .list__wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 300px;
     overflow: hidden;
+}
+
+.main {
+    height: 55rem;
+}
+
+.list {
     margin-top: 3rem;
+    height: 55rem;
+}
+
+.product {
+    width: 200px;
+    aspect-ratio: 1/1;
+    flex: 0 0 auto;
 }

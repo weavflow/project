@@ -1,21 +1,25 @@
 [
   {
     "type": "ad",
+    "ui": "ad",
     "label": "광고",
     "path": "/shop/ad"
   },
   {
     "type" : "live",
+    "ui": "live",
     "label": "쇼핑",
     "path": "/shop/live"
   },
   {
     "type" : "best",
+    "ui": "best",
     "label": "베스트",
     "path" : "/shop/best"
   },
   {
     "type": "products",
+    "ui": "default",
     "label": "전체",
     "children": [
       {"label":  "리스트1", "path": "/shop/products/list1"},
@@ -24,6 +28,7 @@
   },
   {
     "type": "cart",
+    "ui": "cart",
     "label": "장바구니",
     "path": "/shop/cart"
   }

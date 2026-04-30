@@ -2,22 +2,24 @@ import Indicator from "@/components/indicator/indicator";
 import MoveButton from "./moveButton/moveButton";
 
 export default function InternalButton({
-    array,
+    data,
     index,
     onChange,
     Prev,
     Next,
     offset,
    }) {
+    const color = data[index]?.theme?.text ?? "#fff";
+
     return (
         <>
             <Indicator
-                array={array}
+                data={data}
                 current={index}
                 onChange={onChange}
             />
-            <MoveButton direction={"Prev"} offset={offset} onClick={Prev} />
-            <MoveButton direction={"Next"} offset={offset} onClick={Next} />
+            <MoveButton direction={"Prev"} offset={offset} onClick={Prev} color={color} />
+            <MoveButton direction={"Next"} offset={offset} onClick={Next} color={color} />
         </>
     )
 }

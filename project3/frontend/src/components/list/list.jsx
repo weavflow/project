@@ -1,9 +1,9 @@
 import ListContainer from "@/components/list/listContainer/listContainer";
 
-export default async function List({label, type}) {
+export default function List({label, type, ui}) {
     return (
         <>
-            <ListContainer label={label} type={type}/>
+            <ListContainer label={label} type={type} ui={ui} />
         </>
     )
 }

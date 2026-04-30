@@ -1,4 +1,4 @@
-import {LIST} from "@/data/fileMap";
+import List from "@/components/list/list";
 import navData from "@/data/nav.json"
 
 function findNav(type) {
@@ -7,16 +7,12 @@ function findNav(type) {
 
 export default async function Page({params}) {
     const {type} = await params;
+    console.log(type);
 
-    const List = LIST[type];
     const nav = findNav(type);
     const label = nav?.label ?? "";
 
-    if (!List) {
-        return <>존재하지 않는 페이지입니다.</>
-    }
-
     return (
-        <List label={label} type={type} />
+        <List label={label} type={type} ui={nav?.ui ?? "default"}/>
     )
 }

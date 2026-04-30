@@ -1,6 +1,7 @@
 /* Fade */
 .fade__list__track {
     position: relative;
+    width: 100%;
     height: 100%;
 }
 
@@ -17,6 +18,7 @@
 
 .list__item {
     position: relative;
+    width: 100%;
     min-width: 100%;
     height: 100%;
     flex-shrink: 0;
@@ -25,8 +27,13 @@
 }
 
 /* Fade & Slide */
-.list__item__image {
+.list__item > *,
+.fade__list__item > * {
     width: 100%;
     height: 100%;
+}
+
+.list__item img,
+.fade__list__item img {
     object-fit: cover;
 }

@@ -1,15 +1,4 @@
-import {TYPE} from "@/data/fileMap";
 import styles from "./subBanner.module.css"
-
-export function SubBanner({type}) {
-    const Banner = TYPE[type];
-
-    return (
-        <>
-            {Banner && <Banner />}
-        </>
-    )
-}
 
 export function BestSubBanner() {
     return (

@@ -17,6 +17,21 @@ export default function useCarouselController(array, options) {
     const isSlide = mode === "slide";
     // 이미지가 2개 이상 & 모드가 "slide" 일 때
     const isLoop = isSlide && array?.length >= 2;
+    // 이미지가 한 개일 경우
+    const isSingle = array?.length <= 1;
+
+    if (isSingle) {
+        return {
+            index: 0,
+            prevIndex: 0,
+            renderList: array,
+            isTransition: false,
+            handleTransition: () => {},
+            handleIndicator: () => {},
+            handlePrev: () => {},
+            handleNext: () => {}
+        };
+    }
 
     // 현재 보여줄 이미지 순서
     const [index, setIndex] = useState(isSlide ? 1 : 0);

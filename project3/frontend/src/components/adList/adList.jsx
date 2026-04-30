@@ -1,15 +1,43 @@
 import Carousel from "@/components/carousel/carousel";
 
 export default function AdList({list}) {
-    console.log(list);
-
     return (
         <>
             {/* 수동 무한 슬라이드 기본 값 mode={"slide} auto={false} */}
-            <Carousel list={list} offset={12}/>
+            <Carousel data={list} variant={"list"} offset={12}>
+                {list.map((item, i) => (
+                    <img
+                        key={item.id}
+                        src={item.src}
+                        alt={item.name}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        decoding={i === 0 ? "sync" : "async"}
+                    />
+                ))}
+            </Carousel>
             {/* 자동 무한 슬라이드 auto=true */}
-            <Carousel list={list} auto={true} offset={12} />
-            <Carousel list={list} mode={"fade"} offset={12} />
+            <Carousel data={list} variant={"list"} auto={true} offset={12}>
+                {list.map((item, i) => (
+                    <img
+                        key={item.id}
+                        src={item.src}
+                        alt={item.name}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        decoding={i === 0 ? "sync" : "async"}
+                    />
+                ))}
+            </Carousel>
+            <Carousel data={list} variant={"list"} mode={"fade"} offset={12}>
+                {list.map((item, i) => (
+                    <img
+                        key={item.id}
+                        src={item.src}
+                        alt={item.name}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        decoding={i === 0 ? "sync" : "async"}
+                    />
+                ))}
+            </Carousel>
         </>
     )
 }

@@ -15,17 +15,16 @@ export default function CarouselTrack(
                 className={styles.fade__list__track}
                 onTransitionEnd={onTransitionEnd}
             >
-                {renderList.map((item, i) => {
-                    if (!item) return null;
+                {renderList.map((child, i) => {
+                    if (!child) return null;
 
                     const isActive = i === index;
                     const isPrev = i === prevIndex;
-                    const isFirst = mode === "slide" ? i === 1 : i === 0;
 
                     return (
                         <div
                             className={styles.fade__list__item}
-                            key={`${item.id}-${i}`}
+                            key={`${i}`}
                             style={{
                                 transform: isActive
                                     ? "scale(1)"
@@ -36,19 +35,13 @@ export default function CarouselTrack(
                                     ? 1
                                     : isPrev
                                         ? 0.4
-                                        : 0.4,
-                                zIndex: isActive ? 2 : isPrev ? 1 : 0,
+                                        : 0.2,
+                                zIndex: isActive ? 2 : 1,
 
                                 transition: "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease"
                             }}
                         >
-                            <img
-                                className={styles.list__item__image}
-                                src={item.src}
-                                alt={item.name}
-                                loading={isFirst ? "eager" : "lazy"}
-                                decoding={isFirst ? "sync" : "async"}
-                            />
+                            {child}
                         </div>
                     )
                 })}
@@ -65,23 +58,15 @@ export default function CarouselTrack(
                 transition: isTransition ? "transform 0.8s ease-out" : "none",
             }}
         >
-            {renderList.map((item, i) => {
-                if (!item) return null;
-
-                const isFirst = mode === "slide" ? i === 1 : i === 0;
+            {renderList.map((child, i) => {
+                if (!child) return null;
 
                 return (
                     <div
                         className={styles.list__item}
-                        key={`${item.id}-${i}`}
+                        key={`${i}`}
                     >
-                        <img
-                            className={styles.list__item__image}
-                            src={item.src}
-                            alt={item.name}
-                            loading={isFirst ? "eager" : "lazy"}
-                            decoding={isFirst ? "sync" : "async"}
-                        />
+                        {child}
                     </div>
                 )
             })}

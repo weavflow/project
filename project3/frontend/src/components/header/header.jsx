@@ -6,6 +6,7 @@ import BottomNav from "@/components/bottomNav/bottomNav";
 import AdBanner from "@/components/adBanner/AdBanner";
 import Link from "next/link";
 import {useState} from "react";
+import Membership from "@/components/membership/membership";
 
 export default function Header({hasAd = true}) {
     const [theme, setTheme] = useState({
@@ -16,10 +17,8 @@ export default function Header({hasAd = true}) {
     return (
         <header className={styles.shop__header} data-ad={hasAd}>
             <div className={styles.shop__header__ad}>
-                {hasAd && <AdBanner onThemeChange={setTheme}/>}
-                {hasAd && <div className={styles.shop__membership}>
-                    <Link href={"#"}>멤버십 안내</Link>
-                </div>}
+                <AdBanner onThemeChange={setTheme} hasAd={hasAd} />
+                <Membership hasAd={hasAd} />
             </div>
 
             <TopEnd />
