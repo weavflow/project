@@ -1,7 +1,0 @@
-.product__info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 8px;
-    border-bottom: var(--border-secondary)
-}

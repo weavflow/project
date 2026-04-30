@@ -13,11 +13,6 @@ export default function BottomNav({theme}) {
         LoadData(setNavList, setError, "nav");
     }, []);
 
-    useEffect(() => {
-        console.log(navList);
-        console.log(navList.map((item) => item.children));
-    }, [navList])
-
     if (error) return <>{error.message}</>;
 
     return (

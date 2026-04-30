@@ -6,7 +6,7 @@
             "text": "#fff",
             "color": "#fff"
         },
-        "image": "/ad/ad_1.jpg"
+        "src": "/ad/ad_1.jpg"
     },
     {
         "id": 2,
@@ -15,6 +15,6 @@
             "text": "#000",
             "color": "navy"
         },
-        "image": "/ad/ad_2.jpg"
+        "src": "/ad/ad_2.jpg"
     }
 ]

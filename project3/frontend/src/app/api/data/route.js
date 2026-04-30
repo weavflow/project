@@ -3,6 +3,7 @@ const BASE_URL = "http://localhost:9500";
 import {getTemporaryData} from "@/lib/getTemporaryData";
 import {FILE_MAP} from "@/data/fileMap";
 
+// 상품 리스트
 export async function GET(req) {
     const {searchParams} = new URL(req.url);
     const type = searchParams.get("type") || "products";

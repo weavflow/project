@@ -4,34 +4,45 @@
         "name": "eclipse",
         "quantity": 1,
         "price": 3000,
-        "image": "/images/ex1.jpg"
+        "image": [
+            {"id": "1-1", "src": "/images/ex1.jpg", "name": "eclipse"},
+            {"id": "1-2", "src": "/images/ex2.jpg", "name": "eclipse"}
+        ]
     },
     {
         "id": 2,
         "name": "eclipse",
         "quantity": 3,
         "price": 3000,
-        "image": "/images/ex2.jpg"
+        "image": [
+            {"id": "2-1", "src": "/images/ex1.jpg", "name": "eclipse"}
+        ]
     },
     {
         "id": 3,
         "name": "eclipse",
         "quantity": 2,
         "price": 6000,
-        "image": "/images/ex3.jpg"
+        "image": [
+            {"id": "3-1", "src": "/images/ex1.jpg", "name": "eclipse"}
+        ]
     },
     {
         "id": 4,
         "name": "eclipse",
         "quantity": 2,
         "price": 6000,
-        "image": "/images/ex4.jpg"
+        "image": [
+            {"id": "4-1", "src": "/images/ex1.jpg", "name": "eclipse"}
+        ]
     },
     {
         "id": 5,
         "name": "eclipse",
         "quantity": 2,
         "price": 6000,
-        "image": "/images/ex5.jpg"
+        "image": [
+            {"id": "5-1", "src": "/images/ex1.jpg", "name": "eclipse"}
+        ]
     }
 ]

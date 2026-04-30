@@ -4,14 +4,6 @@ import LoadData from "@/lib/loadData";
 import styles from "./AdBanner.module.css";
 import Indicator from "@/components/indicator/indicator";
 
-// 무한 캐러셀 + transition 이벤트 제어
-// index 변경
-// -> transform 이동 (transition on)
-// -> transition 끝 (onTransitionEnd)
-// -> clone 위치인지 검사
-// -> transition off + index 점프
-// -> 다음 순서에서 transition on
-
 export default function AdBanner({onThemeChange}) {
     // ad 데이터 & 에러
     const [ad, setAd] = useState([]);
@@ -34,22 +26,20 @@ export default function AdBanner({onThemeChange}) {
     const transitionRef = useRef([]);
 
     // 데이터 불러오기
-    useEffect(() => {
-        setError(null);
-        LoadData(setAd, setError, type);
-    }, [type]);
+    useEffect( () => {
+        let isMounted = true;
 
-    // 클론 배열
-    // 원본 : [A, B]
-    // 렌더링 : [B, A, B, A]
-    // index:   0  1  2  3
-    // const adList =
-    //     ad.length > 0
-    //         ? [ad[ad.length - 1], ...ad, ad[0]]
-    //         : [];
-    // 왼쪽과 오른쪽 끝에서 자연스럽게 이전&다음으로 움직이는게 가능
-    // 단, index 0, 4은 가짜 위치이기 때문에 다시 진짜 위치로 점프가 필요함.
-    // 해당 배열은 무한 슬라이드 이동인 경우에 쓰이고, 페이드 이동인 경우엔 쓰이지 않음.
+        setError(null);
+        LoadData(
+            (data) => isMounted && setAd(data),
+            (err) => isMounted && setError(err),
+            type
+        );
+
+        return () => {
+            isMounted = false;
+        };
+    }, [type]);
 
     // 이전 & 다음 버튼
     const handlePrev = () => {
@@ -65,60 +55,18 @@ export default function AdBanner({onThemeChange}) {
 
     const handleTransitionEnd = (i) => (e) => {
         // 현재 애니메이션 적용된 요소
-        if (i !== index) return;
-        // opacity 기준으로만 사용
-        if (e.propertyName !== "opacity") return;
+        if (i !== index && i !== prevIndex) return;
+        // opacity & transform 기준
+        if (e.propertyName !== "opacity" && e.propertyName !== "transform") return;
         // 현재 ref를 기준으로 이벤트는 1번만 받기
         if (!isAnimatingRef.current) return;
 
-        isAnimatingRef.current = false;
+        requestAnimationFrame(() => {
+            if (isAnimatingRef.current) {
+                isAnimatingRef.current = false;
+            }
+        });
     }
-
-    // 끝 <-> 처음 이동처리
-    // const handleTransition = () => {
-    //     if (!isTransition) return;
-    //
-    //     if (index === 0) {
-    //         setIsTransition(false);
-    //         setIndex(ad.length);
-    //
-    //         requestAnimationFrame(() => {
-    //             requestAnimationFrame(() => {
-    //                 setIsTransition(true);
-    //                 isAnimatingRef.current = false;
-    //             });
-    //         });
-    //
-    //         return;
-    //     }
-    //
-    //     if (index === ad.length + 1) {
-    //         setIsTransition(false);
-    //         setIndex(1);
-    //
-    //         requestAnimationFrame(() => {
-    //             requestAnimationFrame(() => {
-    //                 setIsTransition(true);
-    //                 isAnimatingRef.current = false;
-    //             });
-    //         });
-    //
-    //         return;
-    //     }
-    //
-    //     isAnimatingRef.current = false;
-    // }
-    // 왼쪽으로 계속 이동 = index : 1 -> 0 (C의 clone)
-    // 그 다음 0 (C의 clone) -> ad.length (C)
-    // transition 없이 순간이동으로 진짜 위치로 점프하는 부분
-    // 사용자에 렌더링되지 않기 때문에 무한 루프처럼 보여지게 됨.
-    // 기존의 setTimeout으로 진행하게 되면
-    // 2 -> 1로 넘어가는 순간에 애니메이션이 빨리감기가 된 것 처럼 보여지게됨.
-
-    // 애니매이션 초기화, useRef를 통한 이벤트 DOM 기준으로 이미지가 움직이는 과정에서
-    // 발생하는 현상인 애니메이션 스킵 현상에 대해서 보정이 되었으나
-    // 문제는 자동 슬라이드 중에 이전&다음 버튼을 클릭하여 움직일 경우
-    // 같은 문제가 발생함을 확인함.
 
     // 자동 슬라이드 + 이전&다음 버튼 클릭 + trainsitionEnd로직의 index 꼬임 증상
     const moveTo = (next) => {
@@ -138,7 +86,7 @@ export default function AdBanner({onThemeChange}) {
 
     const handleIndicator = (i) => {
         stopAutoSlide();
-        moveTo(i + 1);
+        moveTo(i);
         startAutoSlide();
     }
 
@@ -153,22 +101,6 @@ export default function AdBanner({onThemeChange}) {
     const stopAutoSlide = () => {
         clearInterval(intervalRef.current);
     }
-
-    // 애니메이션 초기화
-    // useEffect(() => {
-    //     if (!isTransition) {
-    //         requestAnimationFrame(() => {
-    //             requestAnimationFrame(() => {
-    //                 setIsTransition(true);
-    //             });
-    //         });
-    //     }
-    // }, [isTransition])
-    // requestAnimationFrame를 두번 처리하는 이유
-    // 첫 번째 DOM 변경 반영
-    // 두 번째 브라우저 paint 완료
-    // 만약 해당 코드가 존재하지 않으면
-    // transition off가 동작하지 않아 튀는 현상이 발생함.
 
     // 자동 슬라이드
     useEffect(() => {
@@ -185,16 +117,6 @@ export default function AdBanner({onThemeChange}) {
             setIndex(0);
         }
     }, [ad.length]);
-    // 첫 번째는 클론이 아닌 진짜 데이터부터 시작해야 하기 때문에
-    // 초기값을 무조건 보정해주어야 함.
-
-    // 클론을 포함하여 실제 인덱스 찾기
-    // const currentIndex =
-    //     ad.length > 0
-    //         ? (index - 1 + ad.length) % ad.length
-    //         : 0;
-    // 슬라이드 이동 애니메이션이 아닌
-    // 페이드 애니메이션이라면 실제 index로 그대로 사용
 
     // 광고별 테마
     useEffect(() => {
@@ -235,21 +157,9 @@ export default function AdBanner({onThemeChange}) {
     */
     return (
         <div className={styles.ad__wrapper}>
-            {/*  항상 왼쪽으로 이동 하는 애니메이션  */}
-            {/* 만약에 scale와 opacity으로 index이동을 애니메이션으로 하게 되면
-                ad__track의 style는 자동적으로 주석처리 혹은 비활성화를 진행해야 하며
-                활성화가 되어 있는 경우 애니메이션 충돌이 나면서 이미지가 보이지 않게 됨.
-             */}
             <div
                 ref={trackRef}
                 className={styles.ad__track}
-                // onTransitionEnd={handleTransition}
-                // style={{
-                //     transform: `translate3d(0, -${index * 100}%, 0)`,
-                //     transition: isTransition ? "transform 0.8s ease-out" : "none",
-                //     willChange: isTransition ? "transform": "auto",
-                // }}
-                // 애니메이션 이중 충돌로 인한 주석 처리
             >
                 {ad.map((item, i) => {
                     if (!item) return null;
@@ -258,7 +168,7 @@ export default function AdBanner({onThemeChange}) {
                     
                     return (
                         <div
-                            key={i}
+                            key={`${item.id}-${i}`}
                             ref={e => transitionRef.current[i] = e}
                             className={styles.ad__image}
                             onTransitionEnd={handleTransitionEnd(i)}
@@ -278,9 +188,8 @@ export default function AdBanner({onThemeChange}) {
                             }}
                         >
                             <img
-                            key={i}
                             className={styles.ad__item}
-                            src={item.image}
+                            src={item.src}
                             alt={item.name}
                             loading={isFirst ? "eager" : "lazy"}
                             decoding={isFirst ? "sync" : "async"}
@@ -300,17 +209,17 @@ export default function AdBanner({onThemeChange}) {
                 className={styles.ad__prev}
                 onClick={handlePrev}
                 style={{
-                    color: ad[index]?.theme.text
+                    color: ad[index]?.theme.text ?? "#fff"
                 }}
-            >이전</button>
+            >{"<"}</button>
 
             <button
                 className={styles.ad__next}
                 onClick={handleNext}
                 style={{
-                    color: ad[index]?.theme.text
+                    color: ad[index]?.theme.text ?? "#fff"
                 }}
-            >다음</button>
+            >{">"}</button>
         </div>
     )
 }

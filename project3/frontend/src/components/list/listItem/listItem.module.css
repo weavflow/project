@@ -1,0 +1,38 @@
+:root {
+    --image-width: 15rem;
+    --image-height: 15rem;
+}
+
+.list {
+    width: var(--content-width-primary);
+
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: var(--list-spacing-pd-primary);
+}
+
+.item__error {
+    justify-self: center;
+    color: red;
+    text-align: center;
+}
+
+.list__item {
+    margin: 1rem 0.5rem;
+    padding: var(--list-spacing-pd-primary);
+}
+
+.item__title {
+    color: var(--item-text-color-primary);
+}
+
+.item__price {
+    color: var(--item-text-color-primary);
+}
+
+.item__cart {
+    color: var(--item-text-color-secondary);
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "임시1",
+    "src": "/images/ex.jpg"
+  },
+  {
+    "id": 2,
+    "name": "임시2",
+    "src": "/images/ex.jpg"
+  },
+  {
+    "id": 3,
+    "name": "임시3",
+    "src": "/images/ex.jpg"
+  }
+]

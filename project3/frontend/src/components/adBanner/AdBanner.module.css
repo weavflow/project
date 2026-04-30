@@ -1,6 +1,6 @@
 :root {
     --ad-width: 100%;
-    --ad-height: 100%;
+    --ad-height: 55rem;
 }
 
 .ad__wrapper {
@@ -22,6 +22,7 @@
     position: relative;
     width: var(--ad-width);
     height: var(--ad-height);
+    z-index: 1;
     /*will-change: transform;*/
 /*
     GPU 레이어로 올려서 transform 인터폴레이션 안정화
@@ -41,13 +42,6 @@
 .ad__image {
     position: absolute;
     inset: 0;
-
-    width: var(--ad-width);
-    height: var(--ad-height);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
     filter: brightness(0.9);
 
     transform-origin: center;
@@ -61,9 +55,10 @@
 
 .ad__prev,
 .ad__next {
-    position: relative;
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    font-size: 3rem;
 
     color: white;
     border: none;
@@ -71,13 +66,15 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
+
+    z-index: 10;
 }
 
 .ad__prev {
-    left: 5rem;
+    left: 3rem;
 }
 
 .ad__next {
-    right: 5rem;
+    right: 3rem;
 }
 
